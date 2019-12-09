@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+    <title>Todo list</title>
+</head>
+<body>
+
+<h3>Add new todo</h3>
+<form th:object="${todo}" method="POST" action="/add-todo">
+    <table>
+        <tr>
+            <td><label>Name:</label></td>
+            <td><label>
+                <input type="text" th:field="*{name}"/>
+            </label></td>
+        </tr>
+        <tr>
+            <td><label>Description:</label></td>
+            <td><label>
+                <input type="text" th:field="*{description}"/>
+            </label></td>
+        </tr>
+    </table>
+
+    <input type="submit" value="add">
+</form>
+
+<h3>Remove todo by id</h3>
+<form method="POST" action="/remove-todo">
+    <table>
+        <tr>
+            <td><label>Todo id:</label></td>
+            <td><label>
+                <input type="text" th:name="id"/>
+            </label></td>
+            <td><input type="submit" value="remove"></td>
+        </tr>
+    </table>
+</form>
+
+<h3>Toggle todo by id</h3>
+<form method="POST" action="/toggle-todo">
+    <table>
+        <tr>
+            <td><label>Todo id:</label></td>
+            <td><label>
+                <input type="text" th:name="id"/>
+            </label></td>
+            <td><input type="submit" value="toggle status"></td>
+        </tr>
+    </table>
+</form>
+
+<h3>Your todo list</h3>
+<form method="GET" action="/todo-list">
+    <table>
+        <th:block th:each="todoz : ${todo_entities}">
+            <tr>
+                <td th:text="${todoz.getId()}"></td>
+                <td th:text="${todoz.getName()}"></td>
+                <td th:text="${todoz.getDescription()}"></td>
+                <td th:text="${todoz.getStatus()}"></td>
+            </tr>
+        </th:block>
+    </table>
+</form>
+
+</body>
+</html>
