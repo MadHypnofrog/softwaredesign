@@ -11,12 +11,19 @@ import java.util.Random;
 public class StubServer {
 
     private static int timeout_ms = 100;
+    private static boolean fastYandex = false;
 
     StubServer() {
+        StubServer.timeout_ms = 100;
+        StubServer.fastYandex = false;
     }
 
     public void setTimeout(int timeout_ms) {
         StubServer.timeout_ms = timeout_ms;
+    }
+
+    public void setFastYandex(boolean fastYandex) {
+        StubServer.fastYandex = fastYandex;
     }
 
     static JSONObject process(URL url) {
@@ -33,7 +40,9 @@ public class StubServer {
             Pair<String, String> response = generateResponse(host, search);
             json.put(response.getKey(), response.getValue());
         }
-        while (timeStart + timeout_ms > System.currentTimeMillis()) {
+        if (!host.equals("yandex.ru") || !fastYandex) {
+            while (timeStart + timeout_ms > System.currentTimeMillis()) {
+            }
         }
         return json;
     }
